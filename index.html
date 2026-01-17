@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كافيه لاب - Cafe Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f4f0;
+            color: #4a3c31;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        header {
+            background: linear-gradient(to bottom, #8b6b4a, #6b4c2e);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        header h1 {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            font-size: 3.5em;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        header p {
+            font-size: 1.4em;
+            margin-top: 15px;
+        }
+        nav {
+            background-color: #8b6b4a;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {
+            color: white;
+            margin: 0 25px;
+            text-decoration: none;
+            font-size: 1.4em;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        nav a:hover {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+        #admin-login-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffd700;
+            color: #6b4c2e;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+        }
+        #admin-login-btn:hover {
+            background-color: #fff;
+        }
+        section {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            transition: opacity 0.5s ease;
+        }
+        #home {
+            text-align: center;
+            background: url('https://cdn.decorilla.com/online-decorating/wp-content/uploads/2021/12/Coffee-shop-interior-design-Wendy-Hawthorn.jpg?width=900') no-repeat center/cover;
+            color: white;
+            padding: 150px 20px;
+            border-radius: 0 0 30px 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            animation: slideIn 1s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        #home h2 {
+            font-size: 3em;
+            margin-bottom: 25px;
+        }
+        #home p {
+            font-size: 1.6em;
+        }
+        #menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .menu-item {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            animation: popIn 0.8s ease-in-out;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .menu-item:hover {
+            transform: translateY(-15px) rotate(2deg);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+        }
+        .menu-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .menu-item:hover img {
+            transform: scale(1.05);
+        }
+        .menu-item h3 {
+            font-size: 1.8em;
+            margin: 15px 0;
+            color: #6b4c2e;
+        }
+        .menu-item p {
+            font-size: 1.3em;
+            color: #777;
+        }
+        .add-to-cart-btn {
+            background-color: #6b4c2e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #8b6b4a;
+        }
+        #cart {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        #cart-items {
+            list-style: none;
+            padding: 0;
+        }
+        #cart-items li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.2em;
+            color: #4a3c31;
+        }
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        #about, #contact {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        #about h2, #contact h2 {
+            font-family: 'Amiri', serif;
+            color: #6b4c2e;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+        }
+        #admin-panel {
+            display: none;
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px auto;
+            max-width: 900px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        #orders-list {
+            list-style: none;
+            padding: 0;
+        }
+        #orders-list li {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        #orders-list li:hover {
+            transform: translateY(-5px);
+        }
+        #orders-list li strong {
+            color: #6b4c2e;
+        }
+        #totals {
+            background: #f8f4f0;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        #totals h3 {
+            color: #6b4c2e;
+            margin-bottom: 15px;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        input[type="text"], input[type="password"], input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+        }
+        button {
+            background-color: #6b4c2e;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #8b6b4a;
+        }
+        footer {
+            background: linear-gradient(to top, #8b6b4a, #6b4c2e);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            font-size: 1.1em;
+        }
+        .hidden {
+            display: none !important;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.8em;
+            }
+            nav a {
+                margin: 0 15px;
+                font-size: 1.2em;
+            }
+            #home {
+                padding: 100px 20px;
+            }
+            .modal-content {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="notification-sound" src="https://www.soundjay.com/buttons/beep-07a.mp3" preload="auto"></audio>
+
+    <header id="main-header">
+        <h1>كافيه لاب - Cafe Lab</h1>
+        <p>اكتشف عالم القهوة الرائع مع أجواء إبداعية ومميزة في قلب القاهرة</p>
+        <button id="admin-login-btn">🔑</button>
+    </header>
+
+    <nav id="main-nav">
+        <a href="#home">الرئيسية</a>
+        <a href="#menu">المنيو</a>
+        <a href="#gallery">معرض الصور</a>
+        <a href="#about">عننا</a>
+        <a href="#contact">اتصل بنا</a>
+        <a href="#cart">السلة</a>
+    </nav>
+
+    <!-- Admin Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>تسجيل الدخول للإدارة</h2>
+            <input type="text" id="username" placeholder="اسم المستخدم">
+            <input type="password" id="password" placeholder="كلمة السر">
+            <button id="login-submit">دخول</button>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>قم بطلبك</h2>
+            <input type="text" id="customer-name" placeholder="اسمك">
+            <input type="tel" id="customer-phone" placeholder="رقم هاتفك">
+            <button id="order-submit">إرسال الطلب</button>
+        </div>
+    </div>
+
+    <section id="home">
+        <h2>مرحبا بكم في كافيه لاب</h2>
+        <p>نقدم لكم تجربة فريدة تجمع بين النكهات الغنية والتصميم الإبداعي لأفضل لحظات الاسترخاء.</p>
+    </section>
+
+    <section id="menu">
+        <h2>المنيو الخاص بنا</h2>
+        <div class="menu-item">
+            <img src="https://media.gettyimages.com/id/1540897249/photo/coffee-machine-pouring-out-espresso-shot.jpg?s=612x612&w=gi&k=20&c=DuT85qozTG9pgcMcAM3zdc-_StlwhHj9Fgn49mF9Lxw=" alt="قهوة اسبريسو">
+            <h3>قهوة اسبريسو</h3>
+            <p>قهوة قوية ومميزة مع نكهة غنية - 20 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('قهوة اسبريسو - 20 جنيه')">أضف إلى السلة</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://i.ytimg.com/vi/4TTp06RVy3M/sddefault.jpg" alt="كابتشينو">
+            <h3>كابتشينو</h3>
+            <p>مزيج مثالي من القهوة والحليب الرغوي - 25 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('كابتشينو - 25 جنيه')">أضف إلى السلة</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://www.melskitchencafe.com/wp-content/uploads/2022/02/best-chocolate-cake5.jpg" alt="كيك الشوكولاتة">
+            <h3>كيك الشوكولاتة</h3>
+            <p>قطعة شهية من الكيك الغني بالشوكولاتة - 15 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('كيك الشوكولاتة - 15 جنيه')">أضف إلى السلة</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://media.cnn.com/api/v1/images/stellar/prod/170822122334-seoul-latte-artist-1.jpg?q=x_111,y_101,h_1018,w_1810,c_crop/w_800" alt="لاتيه">
+            <h3>لاتيه</h3>
+            <p>قهوة لاتيه ناعمة مع لمسة فانيليا - 22 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('لاتيه - 22 جنيه')">أضف إلى السلة</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://www.coffeebeancorral.com/images/blog/2023/08/08/americono.jpg" alt="أمريكانو">
+            <h3>أمريكانو</h3>
+            <p>قهوة أمريكانو خفيفة وساخنة - 18 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('أمريكانو - 18 جنيه')">أضف إلى السلة</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Bl3u4N2p8z1m7zY1m6b1xM3z0M3j0M3j0M3j0M3j0M3j0M3j" alt="موكا">
+            <h3>موكا</h3>
+            <p>قهوة موكا مع شوكولاتة غنية - 28 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('موكا - 28 جنيه')">أضف إلى السلة</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Bl3u4N2p8z1m7zY1m6b1xM3z0M3j0M3j0M3j0M3j0M3j0M3j" alt="شاي أخضر">
+            <h3>شاي أخضر</h3>
+            <p>شاي أخضر طازج ومنعش - 15 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('شاي أخضر - 15 جنيه')">أضف إلى السلة</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Bl3u4N2p8z1m7zY1m6b1xM3z0M3j0M3j0M3j0M3j0M3j0M3j" alt="عصير برتقال">
+            <h3>عصير برتقال</h3>
+            <p>عصير برتقال طبيعي - 20 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('عصير برتقال - 20 جنيه')">أضف إلى السلة</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Bl3u4N2p8z1m7zY1m6b1xM3z0M3j0M3j0M3j0M3j0M3j0M3j" alt="كرواسون">
+            <h3>كرواسون</h3>
+            <p>كرواسون طازج مع زبدة - 12 جنيه</p>
+            <button class="add-to-cart-btn" onclick="addToCart('كرواسون - 12 جنيه')">أضف إلى السلة</button>
+        </div>
+    </section>
+
+    <section id="cart">
+        <h2>سلة الطلبات</h2>
+        <ul id="cart-items"></ul>
+        <button onclick="openOrderModal()">إرسال الطلب</button>
+    </section>
+
+    <section id="gallery">
+        <h2>معرض الصور</h2>
+        <div class="gallery-item">
+            <img src="https://www.decorilla.com/online-decorating/wp-content/uploads/2021/12/Cozy-white-coffee-shop-interior-design.jpg" alt="داخل الكافيه">
+        </div>
+        <div class="gallery-item">
+            <img src="https://interiosplash.com/wp-content/uploads/2024/10/2-1_11zon-e1727955077986.webp" alt="تصميم كافيه">
+        </div>
+        <div class="gallery-item">
+            <img src="https://images.ctfassets.net/rric2f17v78a/4t8LfItU4tpB7pZOvJcpP9/b4582c9f1baa6af515ef0623db6ac2b2/coffee-shop-decor.jpg" alt="ديكور كافيه">
+        </div>
+        <div class="gallery-item">
+            <img src="https://www.foodandwine.com/thmb/G8SuZEOz_nZDI-2JHStyOGA4eqs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/The-Bear-Chocolate-Cake-FT-RECIPE0323-a6a4c882ba8f49e69caeaeda83abbe38.jpg" alt="كيك شوكولاتة">
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>عن كافيه لاب</h2>
+        <p>كافيه لاب هو مكان إبداعي يجمع بين فن القهوة والتصميم الحديث. نحن في القاهرة، ونسعى لتقديم تجارب لا تُنسى مليئة بالإبداع والنكهات الفريدة.</p>
+    </section>
+
+    <section id="contact">
+        <h2>اتصل بنا</h2>
+        <p>العنوان: شارع الهرم، الجيزة، القاهرة</p>
+        <p>الهاتف: 0123456789</p>
+        <p>البريد الإلكتروني: info@cafelab.com</p>
+        <p>ساعات العمل: يومياً من 8 صباحاً إلى 12 مساءً</p>
+    </section>
+
+    <section id="admin-panel">
+        <h2>الطلبات الواردة</h2>
+        <ul id="orders-list"></ul>
+        <div id="totals">
+            <h3>إجمالي الربح</h3>
+            <p id="daily-total">إجمالي اليوم: 0 جنيه</p>
+            <p id="weekly-total">إجمالي الأسبوع: 0 جنيه</p>
+            <p id="monthly-total">إجمالي الشهر: 0 جنيه</p>
+        </div>
+        <button onclick="logout()">تسجيل الخروج</button>
+    </section>
+
+    <footer id="main-footer">
+        <p>&copy; 2026 كافيه لاب. جميع الحقوق محفوظة. | مصمم بواسطة Grok مع لمسات إبداعية</p>
+    </footer>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+
+        function addToCart(item) {
+            cart.push(item);
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `${item} <button onclick="removeFromCart(${index})">إزالة</button>`;
+                cartItems.appendChild(li);
+            });
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        // Admin Login
+        const loginModal = document.getElementById('login-modal');
+        const loginBtn = document.getElementById('admin-login-btn');
+        const loginSubmit = document.getElementById('login-submit');
+        const adminPanel = document.getElementById('admin-panel');
+        const ordersList = document.getElementById('orders-list');
+        let lastOrderCount = 0;
+
+        // Check if already logged in
+        if (localStorage.getItem('adminLoggedIn') === 'true') {
+            showAdminMode();
+            loadOrders();
+            calculateTotals();
+            lastOrderCount = JSON.parse(localStorage.getItem('orders') || '[]').length;
+            startPolling();
+        }
+
+        loginBtn.onclick = function() {
+            loginModal.style.display = 'block';
+        }
+
+        const closeSpans = document.getElementsByClassName('close');
+        for (let span of closeSpans) {
+            span.onclick = function() {
+                loginModal.style.display = 'none';
+                orderModal.style.display = 'none';
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target == loginModal || event.target == orderModal) {
+                loginModal.style.display = 'none';
+                orderModal.style.display = 'none';
+            }
+        }
+
+        loginSubmit.onclick = function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === 'abdsasd' && password === '0011') {
+                localStorage.setItem('adminLoggedIn', 'true');
+                loginModal.style.display = 'none';
+                showAdminMode();
+                loadOrders();
+                calculateTotals();
+                lastOrderCount = JSON.parse(localStorage.getItem('orders') || '[]').length;
+                startPolling();
+            } else {
+                alert('اسم المستخدم أو كلمة السر غير صحيحة!');
+            }
+        }
+
+        function showAdminMode() {
+            document.getElementById('main-header').classList.add('hidden');
+            document.getElementById('main-nav').classList.add('hidden');
+            document.getElementById('home').classList.add('hidden');
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('cart').classList.add('hidden');
+            document.getElementById('gallery').classList.add('hidden');
+            document.getElementById('about').classList.add('hidden');
+            document.getElementById('contact').classList.add('hidden');
+            document.getElementById('main-footer').classList.add('hidden');
+            adminPanel.style.display = 'block';
+        }
+
+        function hideAdminMode() {
+            document.getElementById('main-header').classList.remove('hidden');
+            document.getElementById('main-nav').classList.remove('hidden');
+            document.getElementById('home').classList.remove('hidden');
+            document.getElementById('menu').classList.remove('hidden');
+            document.getElementById('cart').classList.remove('hidden');
+            document.getElementById('gallery').classList.remove('hidden');
+            document.getElementById('about').classList.remove('hidden');
+            document.getElementById('contact').classList.remove('hidden');
+            document.getElementById('main-footer').classList.remove('hidden');
+            adminPanel.style.display = 'none';
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            hideAdminMode();
+            stopPolling();
+        }
+
+        // Orders
+        const orderModal = document.getElementById('order-modal');
+        const orderSubmit = document.getElementById('order-submit');
+
+        function openOrderModal() {
+            if (cart.length === 0) {
+                alert('السلة فارغة! أضف عناصر أولاً.');
+                return;
+            }
+            orderModal.style.display = 'block';
+        }
+
+        orderSubmit.onclick = function() {
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+            const details = cart.join(', ');
+            const time = new Date().toLocaleString('ar-EG');
+
+            if (name && phone) {
+                const order = { name, phone, details, time, timestamp: new Date() };
+                saveOrder(order);
+                orderModal.style.display = 'none';
+                alert('تم إرسال الطلب بنجاح!');
+                clearOrderForm();
+                cart = [];
+                updateCart();
+            } else {
+                alert('يرجى ملء اسمك ورقم هاتفك!');
+            }
+        }
+
+        function clearOrderForm() {
+            document.getElementById('customer-name').value = '';
+            document.getElementById('customer-phone').value = '';
+        }
+
+        function saveOrder(order) {
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+        }
+
+        function loadOrders() {
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            ordersList.innerHTML = '';
+            orders.forEach(order => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>اسم:</strong> ${order.name} <br><strong>رقم:</strong> ${order.phone} <br><strong>طلب:</strong> ${order.details} <br><strong>وقت:</strong> ${order.time}`;
+                ordersList.appendChild(li);
+            });
+            return orders.length;
+        }
+
+        // Calculate totals
+        function calculateTotals() {
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const now = new Date();
+            let dailyTotal = 0;
+            let weeklyTotal = 0;
+            let monthlyTotal = 0;
+
+            orders.forEach(order => {
+                const orderDate = new Date(order.timestamp);
+                const priceMatch = order.details.match(/(\d+) جنيه/g) || [];
+                const orderPrice = priceMatch.reduce((sum, p) => sum + parseInt(p), 0);
+
+                // Daily
+                if (orderDate.toDateString() === now.toDateString()) {
+                    dailyTotal += orderPrice;
+                }
+
+                // Weekly (last 7 days)
+                if ((now - orderDate) / (1000 * 60 * 60 * 24) <= 7) {
+                    weeklyTotal += orderPrice;
+                }
+
+                // Monthly (same month and year)
+                if (orderDate.getMonth() === now.getMonth() && orderDate.getFullYear() === now.getFullYear()) {
+                    monthlyTotal += orderPrice;
+                }
+            });
+
+            document.getElementById('daily-total').textContent = `إجمالي اليوم: ${dailyTotal} جنيه`;
+            document.getElementById('weekly-total').textContent = `إجمالي الأسبوع: ${weeklyTotal} جنيه`;
+            document.getElementById('monthly-total').textContent = `إجمالي الشهر: ${monthlyTotal} جنيه`;
+        }
+
+        // Polling for real-time updates (every 5 seconds)
+        let pollingInterval;
+        function startPolling() {
+            pollingInterval = setInterval(() => {
+                const currentCount = loadOrders();
+                calculateTotals();
+                if (currentCount > lastOrderCount) {
+                    playNotificationSound();
+                    lastOrderCount = currentCount;
+                }
+            }, 5000);
+        }
+
+        function stopPolling() {
+            clearInterval(pollingInterval);
+        }
+
+        function playNotificationSound() {
+            const sound = document.getElementById('notification-sound');
+            sound.play();
+        }
+    </script>
+
+</body>
+</html>
