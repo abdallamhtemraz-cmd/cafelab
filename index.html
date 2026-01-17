@@ -4,379 +4,683 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كافيه لاب - Cafe Lab</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
-        }
-        body {
-            font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f4f0;
-            color: #4a3c31;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #1a1a1a;
+            color: #fff;
             line-height: 1.6;
             overflow-x: hidden;
         }
+
+        /* Header with Glassmorphism */
         header {
-            background: linear-gradient(to bottom, #8b6b4a, #6b4c2e);
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            animation: fadeIn 1.5s ease-in-out;
             position: relative;
+            background: linear-gradient(135deg, rgba(139, 107, 74, 0.9), rgba(107, 76, 46, 0.9));
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            animation: headerFloat 3s ease-in-out infinite;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        @keyframes headerFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
+
         header h1 {
             font-family: 'Amiri', serif;
-            margin: 0;
-            font-size: clamp(1.8rem, 5vw, 3.5rem);
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            background: linear-gradient(45deg, #ffd700, #fff, #ffd700);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
         }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
         header p {
-            font-size: clamp(1rem, 3vw, 1.4rem);
-            margin-top: 0.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            margin-top: 1rem;
+            opacity: 0.95;
+            animation: fadeIn 2s ease-in;
         }
+
+        #admin-login-btn {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        #admin-login-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Modern Sticky Navigation */
         nav {
-            background-color: #8b6b4a;
-            padding: 0.8rem;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
         }
+
         nav a {
-            color: white;
-            margin: 0.3rem 0.8rem;
+            color: #ffd700;
+            margin: 0 1.5rem;
             text-decoration: none;
             font-size: clamp(1rem, 2.5vw, 1.3rem);
-            transition: color 0.3s ease, transform 0.3s ease;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
             display: inline-block;
         }
-        nav a:hover {
-            color: #ffd700;
-            transform: scale(1.05);
-        }
-        #admin-login-btn {
+
+        nav a::after {
+            content: '';
             position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background-color: #ffd700;
-            color: #6b4c2e;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: background-color 0.3s;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ffd700, #fff);
+            transition: width 0.3s ease;
         }
-        #admin-login-btn:hover {
-            background-color: #fff;
+
+        nav a:hover {
+            color: #fff;
+            transform: translateY(-2px);
         }
-        section {
-            padding: 2rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
+
+        nav a:hover::after {
+            width: 100%;
         }
-        h2 {
-            font-family: 'Amiri', serif;
-            color: #6b4c2e;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
+
+        /* Hero Section */
         #home {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://cdn.decorilla.com/online-decorating/wp-content/uploads/2021/12/Coffee-shop-interior-design-Wendy-Hawthorn.jpg?width=900') no-repeat center/cover;
+            background: 
+                linear-gradient(135deg, rgba(26, 26, 26, 0.7), rgba(107, 76, 46, 0.6)),
+                url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1600') no-repeat center/cover;
             color: white;
-            padding: 5rem 1rem;
-            border-radius: 0 0 30px 30px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            animation: slideIn 1s ease-out;
+            padding: 5rem 2rem;
+            overflow: hidden;
         }
-        @keyframes slideIn {
+
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.1), transparent);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        #home h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
             from { transform: translateY(-50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        #home h2 {
-            color: white;
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 1rem;
-        }
+
         #home p {
-            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            animation: fadeIn 1.5s ease-out;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-family: 'Amiri', serif;
+            color: #ffd700;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            margin: 1rem auto 0;
+        }
+
+        /* Menu Grid with Modern Cards */
         #menu {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
+
         .menu-item {
-            background-color: white;
-            border-radius: 15px;
-            padding: 1.2rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: popIn 0.8s ease-in-out;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9), rgba(30, 30, 30, 0.9));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            position: relative;
         }
-        @keyframes popIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s ease;
         }
+
+        .menu-item:hover::before {
+            left: 100%;
+        }
+
         .menu-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
         }
+
         .menu-item img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease;
         }
+
         .menu-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
+
+        .menu-item-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
         .menu-item h3 {
-            font-size: clamp(1.3rem, 3vw, 1.6rem);
-            margin: 0.8rem 0;
-            color: #6b4c2e;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            margin: 1rem 0;
+            color: #ffd700;
         }
+
         .menu-item p {
             font-size: clamp(1rem, 2.5vw, 1.2rem);
-            color: #777;
-            margin-bottom: 1rem;
+            color: #ccc;
+            margin-bottom: 1.5rem;
         }
+
         .add-to-cart-btn {
-            background-color: #6b4c2e;
+            background: linear-gradient(135deg, #8b6b4a, #6b4c2e);
             color: white;
             border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 107, 74, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .add-to-cart-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
         .add-to-cart-btn:hover {
-            background-color: #8b6b4a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
         }
+
+        /* Cart Section */
         #cart {
-            background-color: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9), rgba(30, 30, 30, 0.9));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
+
         #cart-items {
             list-style: none;
             padding: 0;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
+
         #cart-items li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid #ddd;
-            font-size: clamp(1rem, 2.5vw, 1.1rem);
-            color: #4a3c31;
-            flex-wrap: wrap;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 10px;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
         }
+
+        #cart-items li:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(-5px);
+        }
+
         #cart-items li button {
-            background-color: #d9534f;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            background: linear-gradient(135deg, #d9534f, #c9302c);
+            padding: 0.5rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 20px;
         }
-        #cart-items li button:hover {
-            background-color: #c9302c;
+
+        .cart-total {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: #ffd700;
+            font-weight: bold;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
         }
+
+        /* Gallery */
         #gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
+
         .gallery-item {
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 2px solid rgba(255, 215, 0, 0.1);
         }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
         .gallery-item:hover {
-            transform: scale(1.03);
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
         }
+
         .gallery-item img {
             width: 100%;
-            height: 250px;
+            height: 300px;
             object-fit: cover;
             display: block;
+            transition: transform 0.5s ease;
         }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* About & Contact */
         #about, #contact {
-            background-color: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            animation: fadeIn 1s ease-in-out;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.9), rgba(30, 30, 30, 0.9));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
+
         #about p, #contact p {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            line-height: 1.8;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            line-height: 2;
+            color: #ddd;
+            margin-bottom: 1rem;
         }
+
+        #contact p strong {
+            color: #ffd700;
+        }
+
+        /* Admin Panel */
         #admin-panel {
             display: none;
-            background-color: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 1000px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.95), rgba(30, 30, 30, 0.95));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem auto;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255, 215, 0, 0.3);
         }
+
         #orders-list {
-            list-style: none;
-            padding: 0;
-        }
-        #orders-list li {
-            background: #f8f4f0;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-        }
-        #orders-list li:hover {
-            transform: translateY(-3px);
-        }
-        #orders-list li strong {
-            color: #6b4c2e;
-        }
-        #totals {
-            background: #f8f4f0;
-            padding: 1.5rem;
-            border-radius: 10px;
             margin-top: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-        #totals h3 {
-            color: #6b4c2e;
-            margin-bottom: 1rem;
-            font-size: clamp(1.3rem, 3vw, 1.8rem);
+
+        .order-card {
+            background: linear-gradient(135deg, rgba(60, 60, 60, 0.9), rgba(50, 50, 50, 0.9));
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
         }
-        #totals p {
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .order-card p {
+            margin: 0.7rem 0;
             font-size: clamp(1rem, 2.5vw, 1.2rem);
-            margin: 0.5rem 0;
+            color: #ddd;
         }
+
+        .order-card strong {
+            color: #ffd700;
+        }
+
+        #totals {
+            background: linear-gradient(135deg, rgba(139, 107, 74, 0.3), rgba(107, 76, 46, 0.3));
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 3rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        #totals h3 {
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        #totals p {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            margin: 1rem 0;
+            color: #fff;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1001;
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
         }
+
         .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 2rem;
-            border: 1px solid #888;
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.98), rgba(30, 30, 30, 0.98));
+            margin: 8% auto;
+            padding: 3rem;
+            border: 2px solid rgba(255, 215, 0, 0.3);
             width: 90%;
-            max-width: 450px;
-            border-radius: 15px;
+            max-width: 500px;
+            border-radius: 25px;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            animation: modalSlideIn 0.4s ease-out;
         }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         .modal-content h2 {
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: #ffd700;
         }
+
         .close {
-            color: #aaa;
+            color: #ffd700;
             float: left;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             line-height: 1;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .close:hover,
-        .close:focus {
-            color: black;
+
+        .close:hover {
+            color: #fff;
+            transform: rotate(90deg);
         }
+
         input[type="text"], input[type="password"], input[type="tel"] {
             width: 100%;
-            padding: 0.8rem;
-            margin: 0.8rem 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            transition: all 0.3s ease;
         }
+
+        input:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
         button {
-            background-color: #6b4c2e;
+            background: linear-gradient(135deg, #8b6b4a, #6b4c2e);
             color: white;
-            padding: 0.8rem 1.8rem;
+            padding: 1rem 2.5rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: clamp(1rem, 2.5vw, 1.1rem);
-            transition: background-color 0.3s;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 107, 74, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
         button:hover {
-            background-color: #8b6b4a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
         }
+
+        /* Footer */
         footer {
-            background: linear-gradient(to top, #8b6b4a, #6b4c2e);
+            background: linear-gradient(to top, rgba(139, 107, 74, 0.9), rgba(107, 76, 46, 0.9));
             color: white;
             text-align: center;
-            padding: 1.5rem;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            padding: 2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            margin-top: 4rem;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
         }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(40, 167, 69, 0.4);
+            z-index: 3000;
+            animation: slideDown 0.5s ease-out;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 600;
+        }
+
         .hidden {
             display: none !important;
         }
-        .notification-badge {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #28a745;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 2000;
-            animation: slideDown 0.5s ease-out;
-        }
-        @keyframes slideDown {
-            from { transform: translate(-50%, -100px); opacity: 0; }
-            to { transform: translate(-50%, 0); opacity: 1; }
-        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             nav a {
-                margin: 0.2rem 0.5rem;
+                margin: 0.3rem 0.8rem;
             }
             #home {
+                min-height: 50vh;
                 padding: 3rem 1rem;
             }
             .menu-item img, .gallery-item img {
-                height: 180px;
+                height: 200px;
             }
+        }
+
+        /* Loading Animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            border-top-color: #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
     </style>
 </head>
@@ -387,24 +691,24 @@
     <header id="main-header">
         <button id="admin-login-btn">🔑</button>
         <h1>كافيه لاب - Cafe Lab</h1>
-        <p>اكتشف عالم القهوة الرائع مع أجواء إبداعية ومميزة في قلب القاهرة</p>
+        <p>تجربة قهوة استثنائية في قلب القاهرة</p>
     </header>
 
     <nav id="main-nav">
         <a href="#home">الرئيسية</a>
         <a href="#menu">المنيو</a>
-        <a href="#gallery">معرض الصور</a>
+        <a href="#gallery">المعرض</a>
         <a href="#about">عننا</a>
-        <a href="#contact">اتصل بنا</a>
+        <a href="#contact">تواصل</a>
         <a href="#cart">السلة</a>
     </nav>
 
     <div id="login-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>تسجيل الدخول للإدارة</h2>
+            <h2>تسجيل دخول الإدارة</h2>
             <input type="text" id="username" placeholder="اسم المستخدم">
-            <input type="password" id="password" placeholder="كلمة السر">
+            <input type="password" id="password" placeholder="كلمة المرور">
             <button id="login-submit">دخول</button>
         </div>
     </div>
@@ -412,128 +716,197 @@
     <div id="order-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>قم بطلبك</h2>
-            <input type="text" id="customer-name" placeholder="اسمك">
-            <input type="tel" id="customer-phone" placeholder="رقم هاتفك">
-            <button id="order-submit">إرسال الطلب</button>
+            <h2>إتمام الطلب</h2>
+            <input type="text" id="customer-name" placeholder="الاسم الكامل">
+            <input type="tel" id="customer-phone" placeholder="رقم الهاتف">
+            <button id="order-submit">تأكيد الطلب</button>
         </div>
     </div>
 
     <section id="home">
-        <h2>مرحبا بكم في كافيه لاب</h2>
-        <p>نقدم لكم تجربة فريدة تجمع بين النكهات الغنية والتصميم الإبداعي لأفضل لحظات الاسترخاء.</p>
+        <h2>مرحباً بك في كافيه لاب</h2>
+        <p>نجمع بين أجود أنواع القهوة والتصميم العصري لنقدم لك تجربة لا تُنسى</p>
     </section>
 
     <section id="menu">
-        <h2>المنيو الخاص بنا</h2>
+        <h2>قائمة المشروبات والحلويات</h2>
+        
         <div class="menu-item">
-            <img src="https://media.gettyimages.com/id/1540897249/photo/coffee-machine-pouring-out-espresso-shot.jpg?s=612x612&w=gi&k=20&c=DuT85qozTG9pgcMcAM3zdc-_StlwhHj9Fgn49mF9Lxw=" alt="قهوة اسبريسو">
-            <h3>قهوة اسبريسو</h3>
-            <p>قهوة قوية ومميزة مع نكهة غنية - 20 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('قهوة اسبريسو', 20)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=600" alt="إسبريسو">
+            <div class="menu-item-content">
+                <h3>إسبريسو مميز</h3>
+                <p>قهوة إيطالية أصيلة بنكهة قوية - 20 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('إسبريسو مميز', 20)">أضف للسلة</button>
+            </div>
         </div>
+
         <div class="menu-item">
-            <img src="https://i.ytimg.com/vi/4TTp06RVy3M/sddefault.jpg" alt="كابتشينو">
-            <h3>كابتشينو</h3>
-            <p>مزيج مثالي من القهوة والحليب الرغوي - 25 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('كابتشينو', 25)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=600" alt="كابتشينو">
+            <div class="menu-item-content">
+                <h3>كابتشينو كريمي</h3>
+                <p>مزيج ساحر من القهوة والحليب الرغوي - 25 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('كابتشينو كريمي', 25)">أضف للسلة</button>
+            </div>
         </div>
+
         <div class="menu-item">
-            <img src="https://www.melskitchencafe.com/wp-content/uploads/2022/02/best-chocolate-cake5.jpg" alt="كيك الشوكولاتة">
-            <h3>كيك الشوكولاتة</h3>
-            <p>قطعة شهية من الكيك الغني بالشوكولاتة - 15 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('كيك الشوكولاتة', 15)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600" alt="كيك شوكولاتة">
+            <div class="menu-item-content">
+                <h3>كيك الشوكولاتة الفاخر</h3>
+                <p>قطعة من الجنة بالشوكولاتة الداكنة - 30 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('كيك الشوكولاتة الفاخر', 30)">أضف للسلة</button>
+            </div>
         </div>
+
         <div class="menu-item">
-            <img src="https://media.cnn.com/api/v1/images/stellar/prod/170822122334-seoul-latte-artist-1.jpg?q=x_111,y_101,h_1018,w_1810,c_crop/w_800" alt="لاتيه">
-            <h3>لاتيه</h3>
-            <p>قهوة لاتيه ناعمة مع لمسة فانيليا - 22 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('لاتيه', 22)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600" alt="لاتيه">
+            <div class="menu-item-content">
+                <h3>لاتيه فانيليا</h3>
+                <p>قهوة ناعمة مع لمسة الفانيليا الفرنسية - 28 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('لاتيه فانيليا', 28)">أضف للسلة</button>
+            </div>
         </div>
+
         <div class="menu-item">
-            <img src="https://www.coffeebeancorral.com/images/blog/2023/08/08/americono.jpg" alt="أمريكانو">
-            <h3>أمريكانو</h3>
-            <p>قهوة أمريكانو خفيفة وساخنة - 18 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('أمريكانو', 18)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=600" alt="أمريكانو">
+            <div class="menu-item-content">
+                <h3>أمريكانو كلاسيك</h3>
+                <p>قهوة أمريكية أصيلة وخفيفة - 18 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('أمريكانو كلاسيك', 18)">أضف للسلة</button>
+            </div>
         </div>
+
         <div class="menu-item">
-            <img src="https://www.acouplecooks.com/wp-content/uploads/2021/01/Chocolate-Mocha-009.jpg" alt="موكا">
-            <h3>موكا</h3>
-            <p>قهوة موكا مع شوكولاتة غنية - 28 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('موكا', 28)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1607627000458-210e8c24814f?w=600" alt="موكا">
+            <div class="menu-item-content">
+                <h3>موكا بالشوكولاتة</h3>
+                <p>قهوة موكا غنية بالشوكولاتة البلجيكية - 32 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('موكا بالشوكولاتة', 32)">أضف للسلة</button>
+            </div>
         </div>
+
         <div class="menu-item">
-            <img src="https://www.acouplecooks.com/wp-content/uploads/2020/01/Green-Tea-001.jpg" alt="شاي أخضر">
-            <h3>شاي أخضر</h3>
-            <p>شاي أخضر طازج ومنعش - 15 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('شاي أخضر', 15)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600" alt="شاي أخضر">
+            <div class="menu-item-content">
+                <h3>شاي أخضر ياباني</h3>
+                <p>شاي ماتشا طبيعي ومنعش - 22 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('شاي أخضر ياباني', 22)">أضف للسلة</button>
+            </div>
         </div>
+
         <div class="menu-item">
-            <img src="https://www.allrecipes.com/thmb/0FW8yyBO1jTGM8bJUxnU9pQnKPU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/32385-fresh-squeezed-orange-juice-DDMFS-4x3-bf7a2cbd1b3e46fdae88196f2ad22f23.jpg" alt="عصير برتقال">
-            <h3>عصير برتقال</h3>
-            <p>عصير برتقال طبيعي - 20 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('عصير برتقال', 20)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600" alt="عصير برتقال">
+            <div class="menu-item-content">
+                <h3>عصير برتقال طازج</h3>
+                <p>عصير طبيعي 100% بدون سكر مضاف - 25 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('عصير برتقال طازج', 25)">أضف للسلة</button>
+            </div>
         </div>
+
         <div class="menu-item">
-            <img src="https://www.inspiredtaste.net/wp-content/uploads/2016/11/Homemade-Croissants-Recipe-1200.jpg" alt="كرواسون">
-            <h3>كرواسون</h3>
-            <p>كرواسون طازج مع زبدة - 12 جنيه</p>
-            <button class="add-to-cart-btn" onclick="addToCart('كرواسون', 12)">أضف إلى السلة</button>
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600" alt="كرواسون">
+            <div class="menu-item-content">
+                <h3>كرواسون فرنسي</h3>
+                <p>معجنات طازجة بالزبدة الأصلية - 15 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('كرواسون فرنسي', 15)">أضف للسلة</button>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600" alt="كولد برو">
+            <div class="menu-item-content">
+                <h3>كولد برو نيترو</h3>
+                <p>قهوة باردة معتّقة 24 ساعة - 35 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('كولد برو نيترو', 35)">أضف للسلة</button>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600" alt="تشيز كيك">
+            <div class="menu-item-content">
+                <h3>تشيز كيك بالفراولة</h3>
+                <p>حلى كريمي لذيذ بالفراولة الطازجة - 35 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('تشيز كيك بالفراولة', 35)">أضف للسلة</button>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600" alt="فرابتشينو">
+            <div class="menu-item-content">
+                <h3>فرابتشينو كراميل</h3>
+                <p>مشروب قهوة مثلج بالكراميل - 38 جنيه</p>
+                <button class="add-to-cart-btn" onclick="addToCart('فرابتشينو كراميل', 38)">أضف للسلة</button>
+            </div>
         </div>
     </section>
 
     <section id="cart">
-        <h2>سلة الطلبات</h2>
+        <h2>سلة المشتريات</h2>
         <ul id="cart-items"></ul>
-        <div style="text-align: center; margin-top: 1rem;">
-            <p style="font-size: clamp(1.2rem, 3vw, 1.5rem); color: #6b4c2e; font-weight: bold;">الإجمالي: <span id="cart-total">0</span> جنيه</p>
+        <div class="cart-total">
+            الإجمالي: <span id="cart-total">0</span> جنيه
         </div>
-        <button onclick="openOrderModal()" style="display: block; margin: 1rem auto;">إرسال الطلب</button>
+        <button onclick="openOrderModal()" style="display: block; margin: 2rem auto;">إرسال الطلب 🛒</button>
     </section>
 
     <section id="gallery">
         <h2>معرض الصور</h2>
+        
         <div class="gallery-item">
-            <img src="https://www.decorilla.com/online-decorating/wp-content/uploads/2021/12/Cozy-white-coffee-shop-interior-design.jpg" alt="داخل الكافيه">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600" alt="كافيه لاب 1">
         </div>
+        
         <div class="gallery-item">
-            <img src="https://interiosplash.com/wp-content/uploads/2024/10/2-1_11zon-e1727955077986.webp" alt="تصميم كافيه">
+            <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600" alt="كافيه لاب 2">
         </div>
+        
         <div class="gallery-item">
-            <img src="https://images.ctfassets.net/rric2f17v78a/4t8LfItU4tpB7pZOvJcpP9/b4582c9f1baa6af515ef0623db6ac2b2/coffee-shop-decor.jpg" alt="ديكور كافيه">
+            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600" alt="كافيه لاب 3">
         </div>
+        
         <div class="gallery-item">
-            <img src="https://www.foodandwine.com/thmb/G8SuZEOz_nZDI-2JHStyOGA4eqs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/The-Bear-Chocolate-Cake-FT-RECIPE0323-a6a4c882ba8f49e69caeaeda83abbe38.jpg" alt="كيك شوكولاتة">
+            <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600" alt="كافيه لاب 4">
+        </div>
+        
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600" alt="كافيه لاب 5">
+        </div>
+        
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1559496417-e7f25c61fad4?w=600" alt="كافيه لاب 6">
         </div>
     </section>
 
     <section id="about">
         <h2>عن كافيه لاب</h2>
-        <p>كافيه لاب هو مكان إبداعي يجمع بين فن القهوة والتصميم الحديث. نحن في القاهرة، ونسعى لتقديم تجارب لا تُنسى مليئة بالإبداع والنكهات الفريدة.</p>
+        <p>كافيه لاب هو وجهتك المثالية لتجربة قهوة استثنائية في قلب القاهرة. نحن نجمع بين فن تحضير القهوة الإيطالية الأصيلة والتصميم الداخلي العصري لنخلق لك مساحة مثالية للاسترخاء والعمل والإبداع.</p>
+        <p>نستخدم أجود أنواع حبوب البن المستوردة من أفضل المزارع حول العالم، ونحرص على تحميصها وطحنها يومياً للحصول على أفضل نكهة ممكنة. فريقنا من الباريستا المحترفين مدربون على أعلى مستوى لضمان تقديم كوب مثالي في كل مرة.</p>
+        <p>نفخر بتقديم قائمة متنوعة من المشروبات الساخنة والباردة، إلى جانب مجموعة مختارة من الحلويات الطازجة والمعجنات اللذيذة التي يتم إعدادها يومياً في مطبخنا.</p>
     </section>
 
     <section id="contact">
-        <h2>اتصل بنا</h2>
-        <p><strong>العنوان:</strong> شارع الهرم، الجيزة، القاهرة</p>
-        <p><strong>الهاتف:</strong> 0123456789</p>
-        <p><strong>البريد الإلكتروني:</strong> info@cafelab.com</p>
-        <p><strong>ساعات العمل:</strong> يومياً من 8 صباحاً إلى 12 مساءً</p>
+        <h2>تواصل معنا</h2>
+        <p><strong>📍 العنوان:</strong> 25 شارع الهرم، الجيزة، القاهرة، مصر</p>
+        <p><strong>📱 الهاتف:</strong> 0123456789</p>
+        <p><strong>📧 البريد الإلكتروني:</strong> info@cafelab.com</p>
+        <p><strong>⏰ ساعات العمل:</strong> يومياً من 8:00 صباحاً حتى 12:00 منتصف الليل</p>
+        <p><strong>🌐 وسائل التواصل:</strong> تابعنا على Instagram و Facebook @cafelab_cairo</p>
     </section>
 
     <section id="admin-panel">
-        <h2>لوحة التحكم - الطلبات الواردة</h2>
+        <h2>لوحة التحكم - إدارة الطلبات</h2>
         <div id="orders-list"></div>
         <div id="totals">
-            <h3>إجمالي الربح</h3>
-            <p id="daily-total">إجمالي اليوم: 0 جنيه</p>
-            <p id="weekly-total">إجمالي الأسبوع: 0 جنيه</p>
-            <p id="monthly-total">إجمالي الشهر: 0 جنيه</p>
+            <h3>📊 إحصائيات المبيعات</h3>
+            <p id="daily-total">📅 إجمالي اليوم: 0 جنيه</p>
+            <p id="weekly-total">📆 إجمالي الأسبوع: 0 جنيه</p>
+            <p id="monthly-total">📈 إجمالي الشهر: 0 جنيه</p>
         </div>
-        <button onclick="logout()" style="display: block; margin: 1rem auto;">تسجيل الخروج</button>
+        <button onclick="logout()" style="display: block; margin: 2rem auto; background: linear-gradient(135deg, #d9534f, #c9302c);">تسجيل الخروج 🚪</button>
     </section>
 
     <footer id="main-footer">
-        <p>&copy; 2026 كافيه لاب. جميع الحقوق محفوظة.</p>
+        <p>&copy; 2026 كافيه لاب - Cafe Lab. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script>
@@ -545,6 +918,7 @@
         function addToCart(item, price) {
             cart.push({ item, price });
             updateCart();
+            showNotification(`تم إضافة ${item} إلى السلة ✅`);
         }
 
         function updateCart() {
@@ -553,15 +927,19 @@
             cartItems.innerHTML = '';
             let total = 0;
             
-            cart.forEach((cartItem, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span>${cartItem.item} - ${cartItem.price} جنيه</span>
-                    <button onclick="removeFromCart(${index})">إزالة</button>
-                `;
-                cartItems.appendChild(li);
-                total += cartItem.price;
-            });
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">السلة فارغة 🛒</p>';
+            } else {
+                cart.forEach((cartItem, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span>${cartItem.item} - ${cartItem.price} جنيه</span>
+                        <button onclick="removeFromCart(${index})">حذف ❌</button>
+                    `;
+                    cartItems.appendChild(li);
+                    total += cartItem.price;
+                });
+            }
             
             cartTotal.textContent = total;
         }
@@ -569,6 +947,7 @@
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCart();
+            showNotification('تم حذف العنصر من السلة');
         }
 
         const loginModal = document.getElementById('login-modal');
@@ -602,17 +981,21 @@
         loginSubmit.onclick = async function() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            
             if (username === 'abdsasd' && password === '0011') {
                 isAdmin = true;
                 loginModal.style.display = 'none';
                 showAdminMode();
-                await loadOrders();
-                await calculateTotals();
+                
                 const orders = await getAllOrders();
                 lastOrderCount = orders.length;
+                await loadOrders();
+                await calculateTotals();
                 startPolling();
+                
+                showNotification('تم تسجيل الدخول بنجاح! مرحباً بك في لوحة التحكم 👋');
             } else {
-                alert('اسم المستخدم أو كلمة السر غير صحيحة!');
+                alert('❌ اسم المستخدم أو كلمة المرور غير صحيحة!');
             }
         }
 
@@ -646,6 +1029,7 @@
             isAdmin = false;
             hideAdminMode();
             stopPolling();
+            showNotification('تم تسجيل الخروج بنجاح 👋');
         }
 
         const orderModal = document.getElementById('order-modal');
@@ -653,32 +1037,44 @@
 
         function openOrderModal() {
             if (cart.length === 0) {
-                alert('السلة فارغة! أضف عناصر أولاً.');
+                alert('❌ السلة فارغة! أضف بعض المنتجات أولاً.');
                 return;
             }
             orderModal.style.display = 'block';
         }
 
         orderSubmit.onclick = async function() {
-            const name = document.getElementById('customer-name').value;
-            const phone = document.getElementById('customer-phone').value;
+            const name = document.getElementById('customer-name').value.trim();
+            const phone = document.getElementById('customer-phone').value.trim();
             
-            if (name && phone) {
-                const details = cart.map(c => `${c.item} (${c.price} جنيه)`).join(', ');
-                const total = cart.reduce((sum, c) => sum + c.price, 0);
-                const time = new Date().toLocaleString('ar-EG');
-                const timestamp = new Date().getTime();
+            if (!name || !phone) {
+                alert('⚠️ يرجى ملء جميع البيانات!');
+                return;
+            }
+            
+            if (phone.length < 10) {
+                alert('⚠️ رقم الهاتف غير صحيح!');
+                return;
+            }
 
-                const order = { name, phone, details, total, time, timestamp };
-                await saveOrder(order);
-                
+            const details = cart.map(c => `${c.item} (${c.price} ج)`).join(', ');
+            const total = cart.reduce((sum, c) => sum + c.price, 0);
+            const time = new Date().toLocaleString('ar-EG', { 
+                dateStyle: 'short', 
+                timeStyle: 'short' 
+            });
+            const timestamp = Date.now();
+
+            const order = { name, phone, details, total, time, timestamp };
+            
+            const saved = await saveOrder(order);
+            
+            if (saved) {
                 orderModal.style.display = 'none';
-                showNotification('تم إرسال الطلب بنجاح! شكراً لك.');
+                showNotification('✅ تم إرسال الطلب بنجاح! سنتواصل معك قريباً');
                 clearOrderForm();
                 cart = [];
                 updateCart();
-            } else {
-                alert('يرجى ملء اسمك ورقم هاتفك!');
             }
         }
 
@@ -690,33 +1086,48 @@
         async function saveOrder(order) {
             try {
                 const orderId = `order_${order.timestamp}`;
-                await window.storage.set(orderId, JSON.stringify(order), true);
+                const result = await window.storage.set(orderId, JSON.stringify(order), true);
+                
+                if (!result) {
+                    throw new Error('فشل حفظ الطلب');
+                }
+                
+                console.log('✅ تم حفظ الطلب:', orderId);
+                return true;
             } catch (error) {
-                console.error('Error saving order:', error);
-                alert('حدث خطأ أثناء حفظ الطلب. الرجاء المحاولة مرة أخرى.');
+                console.error('❌ خطأ في حفظ الطلب:', error);
+                alert('حدث خطأ أثناء إرسال الطلب. الرجاء المحاولة مرة أخرى.');
+                return false;
             }
         }
 
         async function getAllOrders() {
             try {
                 const result = await window.storage.list('order_', true);
-                if (!result || !result.keys) return [];
+                
+                if (!result || !result.keys || result.keys.length === 0) {
+                    console.log('📋 لا توجد طلبات');
+                    return [];
+                }
                 
                 const orders = [];
                 for (const key of result.keys) {
                     try {
                         const data = await window.storage.get(key, true);
                         if (data && data.value) {
-                            orders.push(JSON.parse(data.value));
+                            const order = JSON.parse(data.value);
+                            orders.push(order);
                         }
                     } catch (err) {
-                        console.error(`Error loading order ${key}:`, err);
+                        console.error(`خطأ في تحميل الطلب ${key}:`, err);
                     }
                 }
                 
-                return orders.sort((a, b) => b.timestamp - a.timestamp);
+                orders.sort((a, b) => b.timestamp - a.timestamp);
+                console.log(`📋 تم تحميل ${orders.length} طلب`);
+                return orders;
             } catch (error) {
-                console.error('Error getting orders:', error);
+                console.error('❌ خطأ في جلب الطلبات:', error);
                 return [];
             }
         }
@@ -728,19 +1139,20 @@
             ordersList.innerHTML = '';
             
             if (orders.length === 0) {
-                ordersList.innerHTML = '<p style="text-align: center; color: #777;">لا توجد طلبات حالياً</p>';
-                return orders.length;
+                ordersList.innerHTML = '<p style="text-align: center; color: #999; padding: 3rem; font-size: 1.3rem;">📭 لا توجد طلبات حالياً</p>';
+                return 0;
             }
             
-            orders.forEach(order => {
+            orders.forEach((order, index) => {
                 const div = document.createElement('div');
-                div.style.cssText = 'background: #f8f4f0; padding: 1.2rem; margin-bottom: 1rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);';
+                div.className = 'order-card';
                 div.innerHTML = `
-                    <p><strong>اسم العميل:</strong> ${order.name}</p>
-                    <p><strong>رقم الهاتف:</strong> ${order.phone}</p>
-                    <p><strong>الطلب:</strong> ${order.details}</p>
-                    <p><strong>الإجمالي:</strong> ${order.total} جنيه</p>
-                    <p><strong>الوقت:</strong> ${order.time}</p>
+                    <p style="font-size: 1.4rem; color: #ffd700; margin-bottom: 1rem;"><strong>📦 طلب رقم ${index + 1}</strong></p>
+                    <p><strong>👤 العميل:</strong> ${order.name}</p>
+                    <p><strong>📱 الهاتف:</strong> ${order.phone}</p>
+                    <p><strong>🛒 التفاصيل:</strong> ${order.details}</p>
+                    <p><strong>💰 الإجمالي:</strong> ${order.total} جنيه</p>
+                    <p><strong>🕐 الوقت:</strong> ${order.time}</p>
                 `;
                 ordersList.appendChild(div);
             });
@@ -759,46 +1171,54 @@
                 const orderDate = new Date(order.timestamp);
                 const orderPrice = order.total || 0;
 
+                const diffDays = (now - orderDate) / (1000 * 60 * 60 * 24);
+                
                 if (orderDate.toDateString() === now.toDateString()) {
                     dailyTotal += orderPrice;
                 }
 
-                if ((now - orderDate) / (1000 * 60 * 60 * 24) <= 7) {
+                if (diffDays <= 7) {
                     weeklyTotal += orderPrice;
                 }
 
-                if (orderDate.getMonth() === now.getMonth() && orderDate.getFullYear() === now.getFullYear()) {
+                if (orderDate.getMonth() === now.getMonth() && 
+                    orderDate.getFullYear() === now.getFullYear()) {
                     monthlyTotal += orderPrice;
                 }
             });
 
-            document.getElementById('daily-total').textContent = `إجمالي اليوم: ${dailyTotal} جنيه`;
-            document.getElementById('weekly-total').textContent = `إجمالي الأسبوع: ${weeklyTotal} جنيه`;
-            document.getElementById('monthly-total').textContent = `إجمالي الشهر: ${monthlyTotal} جنيه`;
+            document.getElementById('daily-total').textContent = `📅 إجمالي اليوم: ${dailyTotal} جنيه`;
+            document.getElementById('weekly-total').textContent = `📆 إجمالي الأسبوع: ${weeklyTotal} جنيه`;
+            document.getElementById('monthly-total').textContent = `📈 إجمالي الشهر: ${monthlyTotal} جنيه`;
         }
 
         function startPolling() {
+            console.log('🔄 بدء المراقبة التلقائية للطلبات الجديدة...');
+            
             pollingInterval = setInterval(async () => {
                 const currentCount = await loadOrders();
                 await calculateTotals();
                 
                 if (currentCount > lastOrderCount) {
+                    const newOrders = currentCount - lastOrderCount;
+                    console.log(`🔔 طلب جديد! العدد: ${newOrders}`);
                     playNotificationSound();
-                    showNotification(`طلب جديد! لديك ${currentCount - lastOrderCount} طلب جديد`);
+                    showNotification(`🔔 طلب جديد! لديك ${newOrders} طلب جديد`);
                     lastOrderCount = currentCount;
                 }
-            }, 3000);
+            }, 2000);
         }
 
         function stopPolling() {
             if (pollingInterval) {
                 clearInterval(pollingInterval);
+                console.log('⏸️ تم إيقاف المراقبة');
             }
         }
 
         function playNotificationSound() {
             const sound = document.getElementById('notification-sound');
-            sound.play().catch(e => console.log('Sound play failed:', e));
+            sound.play().catch(e => console.log('تعذر تشغيل الصوت:', e));
         }
 
         function showNotification(message) {
@@ -808,8 +1228,9 @@
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.remove();
-            }, 4000);
+                notification.style.animation = 'slideDown 0.5s ease-out reverse';
+                setTimeout(() => notification.remove(), 500);
+            }, 3500);
         }
 
         document.querySelectorAll('nav a').forEach(anchor => {
@@ -821,6 +1242,10 @@
                 }
             });
         });
+
+        updateCart();
+        
+        console.log('✅ كافيه لاب - النظام جاهز!');
     </script>
 
 </body>
